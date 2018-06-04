@@ -1,0 +1,154 @@
+<mvc:View
+  controllerName="org.atTileVisualiser.controller.RoleSelection" 
+  xmlns:mvc="sap.ui.core.mvc" 
+  displayBlock="true"  
+  xmlns="sap.m" 
+  xmlns:layout="sap.ui.layout"
+  xmlns:grid="sap.ui.table"
+  xmlns:fb="sap.ui.comp.filterbar"
+>
+	<Page class="sapUiContentPadding">
+		<content>
+			<fb:FilterBar reset="onReset" search="onSearch" showRestoreButton="true" showClearButton="true" >
+				<fb:filterItems>
+					<fb:FilterItem name="A" label="User Name">
+						<fb:control>
+							<Input type="Text" value="{RoleFilter>/UserName}"/>
+						</fb:control>				
+					</fb:FilterItem>
+					<fb:FilterItem name="B" label="Group Name" >
+						<fb:control>
+							<Input type="Text" value="{RoleFilter>/GroupName}"/>
+						</fb:control>				
+					</fb:FilterItem>
+					<fb:FilterItem name="C" label="Catalog Name" >
+						<fb:control>
+							<Input type="Text" value="{RoleFilter>/CatalogName}"/>
+						</fb:control>				
+					</fb:FilterItem>
+					<fb:FilterItem name="D" label="Tile Name" >
+						<fb:control>
+							<Input type="Text" value="{RoleFilter>/TileName}"/>
+						</fb:control>				
+					</fb:FilterItem>
+				</fb:filterItems> 
+			</fb:FilterBar>
+			
+			<HBox class="sapUiResponsiveMargin">
+				<grid:Table
+				
+					id="sourceRoles"
+					selectionMode="Single"
+					rows="{
+						path: 'Roles>/',
+						filters: {path: 'Assigned', operator: 'EQ', value1: false},
+						sorter:{'path':'RoleName'}
+					}"
+					visibleRowCount="5"
+				>
+					<grid:toolbar>
+						<Toolbar>
+							<Title text="Candidate Roles"/>
+							<ToolbarSpacer/>
+							<SearchField
+								placeholder="Role Name"
+								value="{RoleSearch>/searchString}"
+								search="onFilterRole"
+								width="15rem"
+							/>
+						</Toolbar>
+					</grid:toolbar>
+					<grid:columns>
+						<grid:Column width="12rem">
+							<Label text="Role" />
+							<grid:template>
+								<Text text="{Roles>RoleName}" wrapping="false" />
+							</grid:template>
+						</grid:Column>
+						<grid:Column>
+							<Label text="Description" />
+							<grid:template>
+								<Text text="{Roles>Description}" wrapping="false" />
+							</grid:template>
+						</grid:Column>
+					</grid:columns>
+				</grid:Table>
+			
+				<VBox justifyContent="Center" class="sapUiTinyMarginBeginEnd">
+					<Button
+						class="sapUiTinyMarginBottom"
+						icon="sap-icon://open-command-field"
+						tooltip="Assign All"
+						press="onAssignAll"
+					/>
+					<Button
+						class="sapUiTinyMarginBottom"
+						icon="sap-icon://navigation-right-arrow"
+						tooltip="Assign Role"
+						press="onAssign"
+					/>
+					<Button
+						icon="sap-icon://navigation-left-arrow"
+						tooltip="Remove Role"
+						press="onRemove"
+					/>
+					<Button
+						icon="sap-icon://reset"
+						tooltip="Reset"
+						press="onReset"
+					/>	
+				</VBox>
+
+				<grid:Table
+					id="AssignedRoles"
+					selectionMode="Single"
+					rows="{
+						path: 'Roles>/',
+						filters: {path: 'Assigned', operator: 'EQ', value1: true},
+						sorter:{'path':'RoleName'}
+					}"
+					visibleRowCount="5"
+				>	
+					<grid:toolbar>
+						<Toolbar>
+							<Title text="Assigned Roles"/>
+						</Toolbar>
+
+					</grid:toolbar>
+					<grid:columns>
+						<grid:Column width="12rem">
+							<Label text="Role" />
+							<grid:template>
+								<Text text="{Roles>RoleName}" wrapping="false" />
+							</grid:template>
+						</grid:Column>
+						<grid:Column>
+							<Label text="Description" />
+							<grid:template>
+								<Text text="{Roles>Description}" wrapping="false" />
+							</grid:template>
+						</grid:Column>
+					</grid:columns>
+				</grid:Table>
+			</HBox>
+			
+			<CheckBox text="Show all" select="onShowAll" selected="{RoleFilter>/ShowAll}"/>
+			
+			<IconTabBar upperCase="false" select="onFilter" backgroundDesign="Translucent">
+				<items>
+					<IconTabFilter key="GROUP" text="Fiori Launch Pad Simulation"/>
+					<IconTabFilter key="CATALOG" text="Catalog Simulation"/>
+				</items>
+				<content>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Button icon="sap-icon://role" press="onShowCandidateRole" />
+						<Button icon="sap-icon://refresh" press="onRefreshFLP" />
+					</Toolbar>
+					<layout:VerticalLayout class="sapUiResponsiveMargin" id="launchpad" width="100%"/>
+				</content>
+			</IconTabBar>
+		</content>
+		
+	</Page>
+</mvc:View>

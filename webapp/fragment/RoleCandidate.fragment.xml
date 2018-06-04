@@ -1,0 +1,46 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+>
+	<Dialog title="Candidate Role" contentWidth="100em">
+		<content>
+			<Table 
+				mode="None"
+				items="{
+					path : 'CandidateRole>/'
+				}"
+				noDataText="No Groups found for Role."
+			>
+				<items>
+		    		<ColumnListItem>
+		        		<cells>
+		        			<ObjectIdentifier title="{CandidateRole>groupName}" text="{CandidateRole>groupId}"/>
+							<Text text="{CandidateRole>tileName}"/>
+							<ObjectIdentifier title="{CandidateRole>catalogName}" text="{CandidateRole>catalogId}"/>
+		            	</cells>
+		    		</ColumnListItem>
+				</items>
+				<columns>
+					<Column mergeDuplicates="true">
+						<header>
+							<Text text="Group" />
+						</header>
+					</Column>
+					<Column mergeDuplicates="true">
+						<header>
+							<Text text="Tile Name" />
+						</header>
+					</Column>
+					<Column>
+						<header>
+							<Text text="Catalog" />
+						</header>
+					</Column>
+				</columns>
+			</Table>
+		</content>
+		<buttons>
+			<Button text="Close" press="onCloseCandidateRole"/>
+		</buttons>
+	</Dialog>	
+</core:FragmentDefinition>
